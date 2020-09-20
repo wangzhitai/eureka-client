@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j2:configuration>
+<!-- log4j2 配置文件 -->
+<configuration name="log4j2Conf" status="WARN" monitorInterval="60">
+	<properties>
+		<property name="log.path" value="./logs"/>
+		<property name="log.encoding" value="UTF-8"/>
+		<property name="log.level" value="INFO"/>
+		<property name="appName" value="syncService"/>
+	</properties>
+
+	<Appenders>
+
+		<!--这个输出控制台的配置，这里输出除了warn和error级别的信息到System.out-->
+		<Console name="console_out_appender" target="SYSTEM_OUT">
+			<!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) -->
+			<ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+			<!-- 输出日志的格式 -->
+			<PatternLayout pattern="%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n"/>
+		</Console>
+		<!--这个输出控制台的配置，这里输出warn和error级别的信息到System.err，在eclipse控制台上看到的是红色文字-->
+		<Console name="console_err_appender" target="SYSTEM_ERR">
+			<!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) -->
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+			<!-- 输出日志的格式 -->
+			<PatternLayout pattern="%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n"/>
+		</Console>
+
+		<!-- 默认 Appender -->
+		<RollingFile name="DEFAULT-APPENDER" fileName="${log.path}/default.log"
+					 filePattern="${log.path}/default-%d{yyyy-MM-dd}.log">
+			<PatternLayout charset="${log.encoding}" pattern="%d %-5p %c{2} - %m %X{TimeKey}%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${log.path}" maxDepth="1">
+					<IfFileName glob="default-*.log"/>
+					<IfLastModified age="30d"/>
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<!-- 异常日志 Appender -->
+		<RollingFile name="SYS-ERROR-APPENDER" fileName="${log.path}/error.log"
+					 filePattern="${log.path}/error-%d{yyyy-MM-dd}.log">
+			<PatternLayout charset="${log.encoding}" pattern="%d %-5p %c{2} - %m %X{TimeKey}%n"/>
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${log.path}" maxDepth="1">
+					<IfFileName glob="error-*.log"/>
+					<IfLastModified age="30d"/>
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<!-- 服务 Appender -->
+		<RollingFile name="SYS-BIZ-SERVICE-APPENDER" fileName="${log.path}/service.log"
+					 filePattern="${log.path}/service-%d{yyyy-MM-dd}.log">
+			<PatternLayout charset="${log.encoding}" pattern="%d %-5p %c{2} - %m %X{TimeKey}%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${log.path}" maxDepth="1">
+					<IfFileName glob="service-*.log"/>
+					<IfLastModified age="30d"/>
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+
+	</Appenders>
+
+	<Loggers>
+		<!-- WEB统一日志 -->
+		<Logger name="cn.tsign.service.sync" level="${log.level}"
+				additivity="false">
+			<appender-ref ref="SYS-BIZ-SERVICE-APPENDER"/>
+			<appender-ref ref="SYS-ERROR-APPENDER"/>
+		</Logger>
+
+
+		<Root level="${log.level}">
+			<appender-ref ref="DEFAULT-APPENDER"/>
+			<appender-ref ref="SYS-ERROR-APPENDER"/>
+			<appender-ref ref="console_out_appender"/>
+			<appender-ref ref="console_err_appender"/>
+		</Root>
+	</Loggers>
+</configuration>

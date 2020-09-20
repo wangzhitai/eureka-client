@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.dao.AccountOuterDAO">
+  <resultMap id="BaseResultMap" type="com.study.dataobject.AccountOuterDO">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uniqueId" jdbcType="VARCHAR" property="uniqueid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="licenseType" jdbcType="TINYINT" property="licensetype" />
+    <result column="licenseNumber" jdbcType="VARCHAR" property="licensenumber" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="organizeId" jdbcType="VARCHAR" property="organizeid" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="personId" jdbcType="VARCHAR" property="personid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="modifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="orgHash" jdbcType="VARCHAR" property="orghash" />
+    <result column="privacy" jdbcType="TINYINT" property="privacy" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="esignAccountId" jdbcType="VARCHAR" property="esignaccountid" />
+    <result column="oauthAccountId" jdbcType="VARCHAR" property="oauthaccountid" />
+    <result column="esignOrgId" jdbcType="VARCHAR" property="esignorgid" />
+    <result column="esignRealnameFlowId" jdbcType="VARCHAR" property="esignrealnameflowid" />
+    <result column="loginMobile" jdbcType="VARCHAR" property="loginmobile" />
+    <result column="loginEmail" jdbcType="VARCHAR" property="loginemail" />
+    <result column="cardNo" jdbcType="VARCHAR" property="cardno" />
+    <result column="isGuided" jdbcType="TINYINT" property="isguided" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uniqueId, name, licenseType, licenseNumber, status, type, mobile, organizeId, 
+    email, personId, createTime, modifyTime, orgHash, privacy, language, esignAccountId, 
+    oauthAccountId, esignOrgId, esignRealnameFlowId, loginMobile, loginEmail, cardNo, 
+    isGuided
+  </sql>
+  <select id="selectByExample" parameterType="com.study.dataobject.AccountOuterDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account_outer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_outer
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from account_outer
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.study.dataobject.AccountOuterDOExample">
+    delete from account_outer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.study.dataobject.AccountOuterDO">
+    insert into account_outer (id, uniqueId, name, 
+      licenseType, licenseNumber, status, 
+      type, mobile, organizeId, 
+      email, personId, createTime, 
+      modifyTime, orgHash, privacy, 
+      language, esignAccountId, oauthAccountId, 
+      esignOrgId, esignRealnameFlowId, loginMobile, 
+      loginEmail, cardNo, isGuided
+      )
+    values (#{id,jdbcType=VARCHAR}, #{uniqueid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{licensetype,jdbcType=TINYINT}, #{licensenumber,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{type,jdbcType=TINYINT}, #{mobile,jdbcType=VARCHAR}, #{organizeid,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{personid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{orghash,jdbcType=VARCHAR}, #{privacy,jdbcType=TINYINT}, 
+      #{language,jdbcType=VARCHAR}, #{esignaccountid,jdbcType=VARCHAR}, #{oauthaccountid,jdbcType=VARCHAR}, 
+      #{esignorgid,jdbcType=VARCHAR}, #{esignrealnameflowid,jdbcType=VARCHAR}, #{loginmobile,jdbcType=VARCHAR}, 
+      #{loginemail,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, #{isguided,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.study.dataobject.AccountOuterDO">
+    insert into account_outer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uniqueid != null">
+        uniqueId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="licensetype != null">
+        licenseType,
+      </if>
+      <if test="licensenumber != null">
+        licenseNumber,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="organizeid != null">
+        organizeId,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="personid != null">
+        personId,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="modifytime != null">
+        modifyTime,
+      </if>
+      <if test="orghash != null">
+        orgHash,
+      </if>
+      <if test="privacy != null">
+        privacy,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="esignaccountid != null">
+        esignAccountId,
+      </if>
+      <if test="oauthaccountid != null">
+        oauthAccountId,
+      </if>
+      <if test="esignorgid != null">
+        esignOrgId,
+      </if>
+      <if test="esignrealnameflowid != null">
+        esignRealnameFlowId,
+      </if>
+      <if test="loginmobile != null">
+        loginMobile,
+      </if>
+      <if test="loginemail != null">
+        loginEmail,
+      </if>
+      <if test="cardno != null">
+        cardNo,
+      </if>
+      <if test="isguided != null">
+        isGuided,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uniqueid != null">
+        #{uniqueid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="licensetype != null">
+        #{licensetype,jdbcType=TINYINT},
+      </if>
+      <if test="licensenumber != null">
+        #{licensenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeid != null">
+        #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="personid != null">
+        #{personid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orghash != null">
+        #{orghash,jdbcType=VARCHAR},
+      </if>
+      <if test="privacy != null">
+        #{privacy,jdbcType=TINYINT},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="esignaccountid != null">
+        #{esignaccountid,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthaccountid != null">
+        #{oauthaccountid,jdbcType=VARCHAR},
+      </if>
+      <if test="esignorgid != null">
+        #{esignorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="esignrealnameflowid != null">
+        #{esignrealnameflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginmobile != null">
+        #{loginmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="loginemail != null">
+        #{loginemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null">
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="isguided != null">
+        #{isguided,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.study.dataobject.AccountOuterDOExample" resultType="java.lang.Long">
+    select count(*) from account_outer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update account_outer
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uniqueid != null">
+        uniqueId = #{record.uniqueid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licensetype != null">
+        licenseType = #{record.licensetype,jdbcType=TINYINT},
+      </if>
+      <if test="record.licensenumber != null">
+        licenseNumber = #{record.licensenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizeid != null">
+        organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personid != null">
+        personId = #{record.personid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null">
+        modifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orghash != null">
+        orgHash = #{record.orghash,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privacy != null">
+        privacy = #{record.privacy,jdbcType=TINYINT},
+      </if>
+      <if test="record.language != null">
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esignaccountid != null">
+        esignAccountId = #{record.esignaccountid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oauthaccountid != null">
+        oauthAccountId = #{record.oauthaccountid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esignorgid != null">
+        esignOrgId = #{record.esignorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esignrealnameflowid != null">
+        esignRealnameFlowId = #{record.esignrealnameflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginmobile != null">
+        loginMobile = #{record.loginmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginemail != null">
+        loginEmail = #{record.loginemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardno != null">
+        cardNo = #{record.cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isguided != null">
+        isGuided = #{record.isguided,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update account_outer
+    set id = #{record.id,jdbcType=VARCHAR},
+      uniqueId = #{record.uniqueid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      licenseType = #{record.licensetype,jdbcType=TINYINT},
+      licenseNumber = #{record.licensenumber,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      organizeId = #{record.organizeid,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      personId = #{record.personid,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      modifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      orgHash = #{record.orghash,jdbcType=VARCHAR},
+      privacy = #{record.privacy,jdbcType=TINYINT},
+      language = #{record.language,jdbcType=VARCHAR},
+      esignAccountId = #{record.esignaccountid,jdbcType=VARCHAR},
+      oauthAccountId = #{record.oauthaccountid,jdbcType=VARCHAR},
+      esignOrgId = #{record.esignorgid,jdbcType=VARCHAR},
+      esignRealnameFlowId = #{record.esignrealnameflowid,jdbcType=VARCHAR},
+      loginMobile = #{record.loginmobile,jdbcType=VARCHAR},
+      loginEmail = #{record.loginemail,jdbcType=VARCHAR},
+      cardNo = #{record.cardno,jdbcType=VARCHAR},
+      isGuided = #{record.isguided,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.study.dataobject.AccountOuterDO">
+    update account_outer
+    <set>
+      <if test="uniqueid != null">
+        uniqueId = #{uniqueid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="licensetype != null">
+        licenseType = #{licensetype,jdbcType=TINYINT},
+      </if>
+      <if test="licensenumber != null">
+        licenseNumber = #{licensenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeid != null">
+        organizeId = #{organizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="personid != null">
+        personId = #{personid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orghash != null">
+        orgHash = #{orghash,jdbcType=VARCHAR},
+      </if>
+      <if test="privacy != null">
+        privacy = #{privacy,jdbcType=TINYINT},
+      </if>
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="esignaccountid != null">
+        esignAccountId = #{esignaccountid,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthaccountid != null">
+        oauthAccountId = #{oauthaccountid,jdbcType=VARCHAR},
+      </if>
+      <if test="esignorgid != null">
+        esignOrgId = #{esignorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="esignrealnameflowid != null">
+        esignRealnameFlowId = #{esignrealnameflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginmobile != null">
+        loginMobile = #{loginmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="loginemail != null">
+        loginEmail = #{loginemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null">
+        cardNo = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="isguided != null">
+        isGuided = #{isguided,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.study.dataobject.AccountOuterDO">
+    update account_outer
+    set uniqueId = #{uniqueid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      licenseType = #{licensetype,jdbcType=TINYINT},
+      licenseNumber = #{licensenumber,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      organizeId = #{organizeid,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      personId = #{personid,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      orgHash = #{orghash,jdbcType=VARCHAR},
+      privacy = #{privacy,jdbcType=TINYINT},
+      language = #{language,jdbcType=VARCHAR},
+      esignAccountId = #{esignaccountid,jdbcType=VARCHAR},
+      oauthAccountId = #{oauthaccountid,jdbcType=VARCHAR},
+      esignOrgId = #{esignorgid,jdbcType=VARCHAR},
+      esignRealnameFlowId = #{esignrealnameflowid,jdbcType=VARCHAR},
+      loginMobile = #{loginmobile,jdbcType=VARCHAR},
+      loginEmail = #{loginemail,jdbcType=VARCHAR},
+      cardNo = #{cardno,jdbcType=VARCHAR},
+      isGuided = #{isguided,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
